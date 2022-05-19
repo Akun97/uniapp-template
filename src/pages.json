@@ -1,0 +1,102 @@
+{
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			// uni-ui
+			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
+			// thorui
+			"tui-(.*)": "thorui-uni/lib/thorui/tui-$1/tui-$1.vue"
+		}
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index"
+		},
+		{
+			"path": "pages/educate/index"
+		},
+		{
+			"path": "pages/celebrate/index"
+		},
+		{
+			"path": "pages/donate/index"
+		},
+		{
+			"path": "pages/member/index"
+		}
+	],
+	"subPackages": [
+		{
+			"root": "index",
+			"pages": [
+				{
+					"path": "pages/demo/index"
+				}
+			]
+		},
+		{
+			"root": "educate",
+			"pages": [
+				{
+					"path": "pages/demo/index"
+				}
+			]
+		},
+		{
+			"root": "donate",
+			"pages": [
+				{
+					"path": "pages/demo/index"
+				}
+			]
+		},
+		{
+			"root": "member",
+			"pages": [
+				{
+					"path": "pages/demo/index"
+				}
+			]
+		}
+	],
+	"tabBar": {
+		"borderStyle": "white",
+		"list": [
+			{
+				"pagePath": "pages/index/index"
+			},
+			{
+				"pagePath": "pages/educate/index"
+			},
+			{
+				"pagePath": "pages/celebrate/index"
+			},
+			{
+				"pagePath": "pages/donate/index"
+			},
+			{
+				"pagePath": "pages/member/index"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationStyle": "custom",
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "石狮一中",
+		"navigationBarBackgroundColor": "#31C6B2",
+		"backgroundColor": "#31C6B2",
+		"backgroundTextStyle": "light",
+		"backgroundColorTop": "#31C6B2",
+		"backgroundColorBottom": "#FFFFFF"
+	},
+	"condition": {
+		"current": 0,
+		"list": [
+			{
+				"name": "首页",
+				"path": "pages/index/index"
+				// "query": "title=反馈接龙&code=feedback"
+			}
+		]
+	}
+}
