@@ -64,6 +64,17 @@
 			]
 		},
 		{
+			"root": "celebrate",
+			"pages": [
+				{
+					"path": "pages/demo/index",
+					"style": {
+						"disableScroll": true
+					}
+				}
+			]
+		},
+		{
 			"root": "donate",
 			"pages": [
 				{

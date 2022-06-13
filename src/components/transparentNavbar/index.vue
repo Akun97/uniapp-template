@@ -1,11 +1,19 @@
+<!--
+ * @Author: Akun97 17759735780@163.com
+ * @Date: 2022-06-13 11:53:59
+ * @LastEditors: Akun97 17759735780@163.com
+ * @LastEditTime: 2022-06-13 17:33:20
+ * @FilePath: \uniapp_template\src\components\transparentNavbar\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <view v-if="!refresherTriggered && !refresherReady"
-    class="w-full flex flex-col top-0 left-0 z-10 fixed">
+    :class="['w-full', data.length === 0 ? '' : 'top-0 left-0 z-10 fixed']">
     <view class="w-full flex items-center justify-center transition-all ease-linear duration-300" 
       :style="{
         height: `${navbarHeight() + (statusBarHeight??0)}px`,
         paddingTop: `${(statusBarHeight??0)}px`,
-        backgroundColor: banner.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0)) ? activeBg : ''
+        backgroundColor: data.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0)) ? activeBg : defaultBg
       }">
 
       <template v-if="!hasTabbar">
@@ -19,7 +27,7 @@
           <template v-if="pagesLength != 1">
             <view class="text-[34rpx] iconfont icon-fanhui1"
               :style="{
-                color: banner.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0)) ? activeText : '#FFFFFF'
+                color: data.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0)) ? activeText : defaultText
               }">
             </view>
           </template>
@@ -27,7 +35,7 @@
           <template v-else>
             <view class="text-[34rpx] iconfont icon-home"
               :style="{
-                color: banner.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0)) ? activeText : '#FFFFFF'
+                color: data.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0)) ? activeText : defaultText
               }">
             </view>
           </template>
@@ -35,13 +43,12 @@
         </view>
       </template>
 
-      <view class="text-[34rpx] tracking-[3rpx]"
+      <view class="text-[34rpx] font-extrabold tracking-[3rpx]"
         :style="{
-          color: banner.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0)) ? activeText : '#FFFFFF'
+          color: data.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0)) ? activeText : defaultText
         }">{{title}}</view>
 
     </view>
-    <view v-if="banner.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0))" class="w-full h-[1rpx] bg-black/[0.1]"></view>
   </view>
 </template>
 
@@ -49,21 +56,26 @@
 import { useNavbar } from '@/hooks/useNavbar';
 
 interface Props {
-  hasTabbar?: boolean,
-  refresherTriggered?: boolean,
-  refresherReady?: boolean,
-  banner?: any[]
-  scrollTop: number,
-  title: string,
+  hasTabbar?: boolean, // 是否是导航页 是的会没有左侧按钮
+  refresherTriggered?: boolean, // 刷新或下拉都会隐藏
+  refresherReady?: boolean, // 刷新或下拉都会隐藏
+  data?: any[], // 页面顶部没轮播之类的将不会定位
+  scrollTop: number, // 当页面滚动样式变成激活样式
+  title: string, // 标题
+  defaultBg?: string, // 默认背景色
   activeBg?: string,
-  activeText?: string
+  defaultText?: string, // 默认文本色
+  activeText?: string,
+
 }
 const props = withDefaults(defineProps<Props>(), {
   hasTabbar: false,
   refresherTriggered: false,
   refresherReady: false,
-  banner: () => [0],
+  data: () => [0],
+  defaultBg: '',
   activeBg: '#F7F7F7',
+  defaultText: '#FFFFFF',
   activeText: '#000000'
 });
 

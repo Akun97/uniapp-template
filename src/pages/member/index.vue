@@ -1,20 +1,14 @@
 <template>
   <custom-page :hasTabbar="true" title="校友通">
     <template v-slot:content>
-      <view class="flex-1 h-full overflow-hidden">
-        <scroll-view class="w-full h-full" :scroll-y="true">
-          5
-        </scroll-view>
-      </view>
+      <view class="w-full">5</view>
     </template>
   </custom-page>
 </template>
 
 <script setup lang="ts">
-import { useTabbar } from '@/hooks/useTabbar';
+import { initFunc } from '@/pages/member/hooks/methods';
 
-const { initTabbar } = useTabbar();
-
-initTabbar(4);
+initFunc();
 
 </script>

@@ -38,6 +38,7 @@ page {
   border-width: 0;
   border-style: solid;
   border-color: currentColor;
+  touch-action: pan-y;
 }
 /* #endif */
 </style>
