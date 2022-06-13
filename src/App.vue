@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
+import { update } from '@/hooks/update';
 
 onLaunch(() => {
   console.log("App Launch");
@@ -7,6 +8,9 @@ onLaunch(() => {
 
 onShow(() => {
   console.log("App Show");
+  /* #ifdef MP */
+  update();
+  /* #endif */
 });
 
 onHide(() => {
@@ -28,4 +32,12 @@ page {
   height: 0;
   color: transparent;
 }
+/* #ifdef APP-PLUS || H5 */
+*, ::before, ::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: currentColor;
+}
+/* #endif */
 </style>

@@ -13,6 +13,7 @@ export const constructFunc = (emit:any) => {
   const dataTop = ref<number>(0); // tab栏离顶部的距离
   const scrollIntoView = ref<string>(''); // 操作数据列表滚动到指定元素
   const { proxy } = (getCurrentInstance() as ComponentInternalInstance);
+  const refresherTriggered = ref<boolean>(false);
 
   const getTabHeight = ():void => { // 获取tab栏高度
     uni.createSelectorQuery().in(proxy).select(".sst-tabs-scroll").boundingClientRect(data => {
@@ -23,11 +24,13 @@ export const constructFunc = (emit:any) => {
   const getTabWidth = ():void => { // 获取tab项宽度、初始化tab项下划线位置
     const widthList:number[] = [];
     uni.createSelectorQuery().in(proxy).selectAll(`.sst-tabs`).boundingClientRect(data => { 
-      (data as any[]).forEach((element: any) => {
-        widthList.push(element.width??0);
-      });
-      tabsItemWidth.value = Math.max(...widthList);
-      tabsLineOffset.value = (tabsItemWidth.value - tabsLineWidth.value)/2;
+      if (data) {
+        (data as any[]).forEach((element: any) => {
+          widthList.push(element.width??0);
+        });
+        tabsItemWidth.value = Math.max(...widthList);
+        tabsLineOffset.value = (tabsItemWidth.value - tabsLineWidth.value)/2;
+      }
     }).exec();
   }
 
@@ -38,13 +41,13 @@ export const constructFunc = (emit:any) => {
   }
 
   const navbarHeight = ():number => { // navbar高度
-    // #ifdef APP-PLUS || H5
+    /* #ifdef APP-PLUS || H5 */
     return 44;
-    // #endif
-    // #ifdef MP
+    /* #endif */
+    /* #ifdef MP */
     let height = systemInfo.platform == 'ios' ? 44 : 48;
     return height;
-    // #endif
+    /* #endif */
   }
 
   const scrollListener = (e:any):void => { // 开启吸顶后监听滚动
@@ -82,6 +85,22 @@ export const constructFunc = (emit:any) => {
     }
   }
 
+  const refresh = (index:number):void => {
+    if (!refresherTriggered.value) {
+      refresherTriggered.value = true;
+      emit('refresh', index);
+      setTimeout(() => {
+        refresherTriggered.value = false;
+      }, 500);
+    } else {
+      refresherTriggered.value = false;
+    }
+  }
+
+  const loadmore = (index:number):void => {
+    emit('loadmore', index);
+  }
+
   return {
     tabsScrollHeight,
     tabsScrollLeft,
@@ -89,12 +108,15 @@ export const constructFunc = (emit:any) => {
     tabsLineOffset,
     scroll,
     scrollIntoView,
+    refresherTriggered,
     getTabHeight,
     getTabWidth,
     getDataTop,
     scrollListener,
     tabsChange,
-    swiperChange
+    swiperChange,
+    refresh,
+    loadmore
   }
 
 }

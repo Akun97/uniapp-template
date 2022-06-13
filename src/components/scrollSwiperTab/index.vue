@@ -12,47 +12,54 @@
 
       <slot></slot>
 
-      <view class="w-full"
-        :style="{paddingTop: `${tabsPaddingTop}rpx`, paddingBottom: `${tabsPaddingBottom}rpx`}">
-        <scroll-view :scroll-x="true" 
-          :scroll-left="tabsScrollLeft"
-          class="sst-tabs-scroll whitespace-nowrap w-full relative" 
-          :style="{ height: tabsScrollHeight ? `${tabsScrollHeight}px` : 'auto' }">
-        
-          <template v-for="(item, index) in tabs" :key="index">
-            <view class="sst-tabs text-center inline-block"
-              :style="{ 
-                width: tabsItemWidth ? `${tabsItemWidth}px` : 'auto',
-                paddingLeft: `${itemSpace}rpx`,
-                paddingRight: `${itemSpace}rpx`
-              }"
-              @click="tabsChange(index)">         
-              <view :class="['text-[32rpx]', 'pb-[16rpx]', 
-                tabsIndex == index ? 'text-theme' : 'text-gray-100']" 
-                :style="{
-                  fontWeight: tabsIndex == index ? 'bold' : 500
-                }">
-                {{item}}
+      <slot name="tabs" :tabs="tabs" :change="tabsChange">
+        <view class="w-full"
+          :style="{paddingTop: `${tabsPaddingTop}rpx`, paddingBottom: `${tabsPaddingBottom}rpx`}">
+          <scroll-view :scroll-x="true" 
+            :scroll-left="tabsScrollLeft"
+            class="sst-tabs-scroll whitespace-nowrap w-full relative" 
+            :style="{ height: tabsScrollHeight ? `${tabsScrollHeight}px` : 'auto' }">
+          
+            <template v-for="(item, index) in tabs" :key="index">
+              <view class="sst-tabs text-center inline-block"
+                :style="{ 
+                  width: tabsItemWidth ? `${tabsItemWidth}px` : 'auto',
+                  paddingLeft: `${itemSpace}rpx`,
+                  paddingRight: `${itemSpace}rpx`
+                }"
+                @click="tabsChange(index)">         
+                <view :class="['text-[32rpx]', 'pb-[16rpx]', 
+                  tabsIndex == index ? 'text-theme' : 'text-gray-100']" 
+                  :style="{
+                    fontWeight: tabsIndex == index ? 'bold' : 500
+                  }">
+                  {{item}}
+                </view>
               </view>
-            </view>
-          </template>
-              
-          <template v-if="tabsLineOffset">
-            <view class="w-[29rpx] h-[5rpx] rounded-[2rpx] bg-theme absolute
-              transition-all duration-200 ease-linear" 
-              :style="{ left: `${tabsLineOffset}px` }">
-            </view>
-          </template>
-        
-        </scroll-view>
-      </view>
+            </template>
+                
+            <template v-if="tabsLineOffset">
+              <view class="w-[29rpx] h-[5rpx] rounded-[2rpx] bg-theme absolute
+                transition-all duration-200 ease-linear" 
+                :style="{ left: `${tabsLineOffset}px` }">
+              </view>
+            </template>
+          
+          </scroll-view>
+        </view>
+      </slot>
 
       <view class="flex-1 h-full overflow-hidden">
         <swiper class="w-full h-full" @change="swiperChange" :current="(tabsIndex as number)">
           <template v-for="(list, i) in data" :key="i">
             <swiper-item>
-              <scroll-view class="w-full h-full" :scroll-y="scroll">
-                <slot name="list" :list="list"></slot>
+              <scroll-view class="w-full h-full" 
+                :scroll-y="scroll"
+                :refresher-enabled="refresherEnabled" 
+                :refresher-triggered="refresherTriggered" 
+                @refresherrefresh="refresh(tabsIndex)"
+                @scrolltolower="loadmore(tabsIndex)">
+                <slot name="list" :list="list" :index="i"></slot>
               </scroll-view>
             </swiper-item>
           </template>
@@ -76,6 +83,7 @@ interface Props {
   itemSpace?: string, // 每个tab的左右间距
   tabsPaddingTop?: string, // tab栏顶部间距
   tabsPaddingBottom?: string // tab栏底部间距
+  refresherEnabled?: boolean // 是否开启刷新
 }
 const props = withDefaults(defineProps<Props>(), {
   sticky: false,
@@ -84,9 +92,10 @@ const props = withDefaults(defineProps<Props>(), {
   data: () => [],
   itemSpace: '0',
   tabsPaddingTop: '0',
-  tabsPaddingBottom: '0'
+  tabsPaddingBottom: '0',
+  refresherEnabled: false
 });
-const emit = defineEmits(['change', 'update:tabsIndex']);
+const emit = defineEmits(['change', 'update:tabsIndex', 'refresh', 'loadmore']);
 
 const {
   tabsScrollHeight,
@@ -95,12 +104,15 @@ const {
   tabsLineOffset,
   scroll,
   scrollIntoView,
+  refresherTriggered,
   getTabHeight,
   getTabWidth,
   getDataTop,
   scrollListener,
   tabsChange,
-  swiperChange
+  swiperChange,
+  refresh,
+  loadmore
 } = constructFunc(emit);
 
 onMounted(() => {

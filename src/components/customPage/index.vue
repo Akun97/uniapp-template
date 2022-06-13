@@ -1,5 +1,5 @@
 <template>
-  <view :class="['w-full', 'h-full', 'flex', 'flex-col', `bg-${backgroundColor}`]" 
+  <view :class="['w-full', 'h-full', 'flex', 'flex-col', `${backgroundColor}`]" 
     :style="{ 
       paddingBottom: hasTabbar ? 0 : 'env(safe-area-inset-bottom)',
     }">
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   hasNavbar: true,
   hasTabbar: false,
   title: '',
-  backgroundColor: 'white'
+  backgroundColor: 'bg-white'
 });
 
 </script>

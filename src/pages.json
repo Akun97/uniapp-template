@@ -10,19 +10,34 @@
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index"
+			"path": "pages/index/index",
+			"style": {
+				"disableScroll": true
+			}
 		},
 		{
-			"path": "pages/educate/index"
+			"path": "pages/educate/index",
+			"style": {
+				"disableScroll": true
+			}
 		},
 		{
-			"path": "pages/celebrate/index"
+			"path": "pages/celebrate/index",
+			"style": {
+				"disableScroll": true
+			}
 		},
 		{
-			"path": "pages/donate/index"
+			"path": "pages/donate/index",
+			"style": {
+				"disableScroll": true
+			}
 		},
 		{
-			"path": "pages/member/index"
+			"path": "pages/member/index",
+			"style": {
+				"disableScroll": true
+			}
 		}
 	],
 	"subPackages": [
@@ -30,7 +45,10 @@
 			"root": "index",
 			"pages": [
 				{
-					"path": "pages/demo/index"
+					"path": "pages/demo/index",
+					"style": {
+						"disableScroll": true
+					}
 				}
 			]
 		},
@@ -38,7 +56,10 @@
 			"root": "educate",
 			"pages": [
 				{
-					"path": "pages/demo/index"
+					"path": "pages/demo/index",
+					"style": {
+						"disableScroll": true
+					}
 				}
 			]
 		},
@@ -46,7 +67,10 @@
 			"root": "donate",
 			"pages": [
 				{
-					"path": "pages/demo/index"
+					"path": "pages/demo/index",
+					"style": {
+						"disableScroll": true
+					}
 				}
 			]
 		},
@@ -54,7 +78,10 @@
 			"root": "member",
 			"pages": [
 				{
-					"path": "pages/demo/index"
+					"path": "pages/demo/index",
+					"style": {
+						"disableScroll": true
+					}
 				}
 			]
 		}

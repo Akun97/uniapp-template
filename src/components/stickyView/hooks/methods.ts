@@ -15,13 +15,13 @@ export const constructFunc = () => {
   }
 
   const navbarHeight = ():number => { // navbar高度
-    // #ifdef APP-PLUS || H5
+    /* #ifdef APP-PLUS || H5 */
     return 44;
-    // #endif
-    // #ifdef MP
+    /* #endif */
+    /* #ifdef MP */
     let height = systemInfo.platform == 'ios' ? 44 : 48;
     return height;
-    // #endif
+    /* #endif */
   }
 
   const scrollListener = (e:any):void => { // 开启吸顶后监听滚动
