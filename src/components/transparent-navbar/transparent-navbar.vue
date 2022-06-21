@@ -1,11 +1,3 @@
-<!--
- * @Author: Akun97 17759735780@163.com
- * @Date: 2022-06-13 11:53:59
- * @LastEditors: Akun97 17759735780@163.com
- * @LastEditTime: 2022-06-13 17:33:20
- * @FilePath: \uniapp_template\src\components\transparentNavbar\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
   <view v-if="!refresherTriggered && !refresherReady"
     :class="['w-full', data.length === 0 ? '' : 'top-0 left-0 z-10 fixed']">
@@ -53,7 +45,6 @@
 </template>
 
 <script setup lang="ts">
-import { useNavbar } from '@/hooks/useNavbar';
 
 interface Props {
   hasTabbar?: boolean, // 是否是导航页 是的会没有左侧按钮

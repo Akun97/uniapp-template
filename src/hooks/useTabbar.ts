@@ -1,5 +1,3 @@
-import { useStore } from '@/store/index';
-
 export const useTabbar = () => {
 
   const store = useStore();

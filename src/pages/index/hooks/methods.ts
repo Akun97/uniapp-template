@@ -1,8 +1,3 @@
-import { ref } from 'vue';
-import { onShow } from '@dcloudio/uni-app';
-import { useTabbar } from '@/hooks/useTabbar';
-import { api } from '@/server/api';
-
 export const initFunc = () => {
 
   const { initTabbar } = useTabbar();

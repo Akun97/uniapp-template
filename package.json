@@ -1,6 +1,6 @@
 {
   "name": "uni-preset-vue",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "dev:app": "uni -p app",
     "dev:custom": "uni -p",
@@ -64,6 +64,7 @@
     "tailwindcss": "^3.0.24",
     "typescript": "^4.6.2",
     "uni-base-components-types": "^1.1.1",
+    "unplugin-auto-import": "^0.8.8",
     "vite": "^2.9.12",
     "weapp-tailwindcss-webpack-plugin": "^1.2.9"
   }

@@ -1,19 +1,31 @@
-/*
- * @Author: Akun97 17759735780@163.com
- * @Date: 2022-05-19 10:26:36
- * @LastEditors: Akun97 17759735780@163.com
- * @LastEditTime: 2022-06-13 10:48:42
- * @FilePath: \uniapp_template\vite.config.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 import { defineConfig, loadEnv } from "vite";
 import uni from "@dcloudio/vite-plugin-uni";
 import { resolve } from "path";
-import { ViteWeappTailwindcssPlugin as vwt, postcssWeappTailwindcssRename } from 'weapp-tailwindcss-webpack-plugin'
+import { ViteWeappTailwindcssPlugin as vwt, postcssWeappTailwindcssRename } from 'weapp-tailwindcss-webpack-plugin';
+import AutoImport from 'unplugin-auto-import/vite';
+import vueApi from "./vue-api";
+import uniappApi from "./uniapp-api";
 
 const isH5 = process.env.UNI_PLATFORM === 'h5';
 
-const vitePlugins = [uni(), !isH5 ? vwt() : undefined];
+const vitePlugins = [
+  uni(), 
+  !isH5 ? vwt() : undefined,
+  AutoImport({
+    imports: [
+      {
+        "vue": vueApi,
+        "@dcloudio/uni-app": uniappApi
+      }
+    ],
+    dirs: [
+      'src/hooks',
+      'src/store',
+      'src/server',
+      'src/model/userInfo'
+    ]
+  })
+];
 // postcss 插件配置
 const postcssPlugins = [require('autoprefixer')(), require('tailwindcss')()];
 if (!isH5) {

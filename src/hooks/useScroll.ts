@@ -1,6 +1,4 @@
-import { ref } from 'vue';
-
-export const scrollFunc = () => {
+export const useScroll = () => {
 
   const scrollTop = ref<number>(0);
 

@@ -16,7 +16,8 @@
           show ? '' : 'opacity-0'
         ]" 
         :src="src" 
-        @load="imageLoad">
+        @load="imageLoad"
+        :mode="mode">
       </image>
     </template>
   </view>
@@ -24,15 +25,16 @@
 
 <script setup lang="ts">
 import { replaceJs } from 'weapp-tailwindcss-webpack-plugin/replace'
-import { ref, watch } from 'vue';
 
 interface Props {
   className?: string,
   src?: string,
+  mode?: string
 }
 const props = withDefaults(defineProps<Props>(), {
   className: '',
-  src: ''
+  src: '',
+  mode: 'scaleToFill'
 });
 const emit = defineEmits(['click']);
 

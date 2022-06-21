@@ -32,8 +32,8 @@
 
 <script setup lang="ts">
 import { initFunc } from '@/pages/index/hooks/methods';
-import { fileUrl } from '@/hooks/global';
 
-const {list} = initFunc();
+const { list } = initFunc();
+const { fileUrl } = useGlobal();
 
 </script>

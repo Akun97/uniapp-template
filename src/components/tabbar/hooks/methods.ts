@@ -1,6 +1,3 @@
-import { computed, markRaw } from 'vue'; 
-import { useStore } from '@/store/index';
-
 export const constructFunc = () => {
 
   const tabbarList = markRaw<Tabbar[]>([

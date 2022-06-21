@@ -1,5 +1,3 @@
-import { useStore } from '@/store/index';
-
 export const useNavbar = () => {
 
   const store = useStore();

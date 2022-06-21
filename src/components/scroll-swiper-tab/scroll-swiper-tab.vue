@@ -72,8 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { constructFunc } from '@/components/scrollSwiperTab/hooks/methods';
+import { constructFunc } from '@/components/scroll-swiper-tab/hooks/methods';
 
 interface Props {
   sticky?: boolean, // 是否吸顶

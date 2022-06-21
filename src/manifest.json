@@ -1,5 +1,5 @@
 {
-    "name" : "石狮一中",
+    "name" : "沁猜啦",
     "appid" : "",
     "description" : "",
     "versionName" : "1.0.0",
@@ -50,7 +50,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wxc46917a89e9cc0ee",
+        "appid" : "wx89d2782876aff860",
         "optimization": {
             "subPackages": true
         },

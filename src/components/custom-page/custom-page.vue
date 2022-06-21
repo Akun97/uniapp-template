@@ -52,11 +52,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import navbar from '@/components/navbar/index.vue';
-import TransparentNavbar from '@/components/transparentNavbar/index.vue';
-import tabbar from '@/components/tabbar/index.vue';
-import { scrollFunc } from '@/hooks/scrollFunc';
 
 interface fixedNavObject {
   data?: any[], // 页面顶部没轮播之类的将不会定位
@@ -94,7 +89,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const emit = defineEmits(['refresh', 'loadmore']);
 
-const { onScroll, scrollTop } = scrollFunc();
+const { onScroll, scrollTop } = useScroll();
 
 const refresherTriggered = ref<boolean>(false);
 const refresherReady = ref<boolean>(false);

@@ -1,6 +1,4 @@
-import { requestFun } from './index';
-
-export class Request {
+export class RequestMethods {
 
   static init = (param: request = {}, need?:needToken) => {
     const success:((any: any) => void) | undefined = param?.success;

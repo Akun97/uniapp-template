@@ -27,8 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { constructFunc } from '@/components/stickyView/hooks/methods';
+import { constructFunc } from '@/components/sticky-view/hooks/methods';
 
 interface Props {
   headerTop?: string, // 吸顶头部顶部间距
