@@ -42,9 +42,11 @@ export const constructFunc = () => {
   const tabbarIndex = computed(() => store.getters['base/tabbarIndex']);
   
   const tabbarChange = (index: number, path:string):void => {
-    store.commit('base/tabbarIndexUpdate', { index: index });
     uni.switchTab({
-      url: path
+      url: path,
+      success: res => {
+        store.commit('base/tabbarIndexUpdate', { index: index });
+      }
     });
   }
 
