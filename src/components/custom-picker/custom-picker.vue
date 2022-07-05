@@ -30,11 +30,13 @@ const refPopup = ref<any>(null);
 
 const open = ():void => {
   refPopup.value.open();
+  pickerValue.value = [0];
 }
 defineExpose({open})
 
 const cancel = ():void => {
   refPopup.value.close();
+  pickerValue.value = [0];
 }
 
 const confirm = ():void => {
