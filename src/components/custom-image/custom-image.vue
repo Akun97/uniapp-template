@@ -16,6 +16,7 @@
           show ? '' : 'opacity-0'
         ]" 
         :src="src" 
+        :lazy-load="true"
         @load="imageLoad"
         :mode="mode">
       </image>
