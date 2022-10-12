@@ -3,5 +3,8 @@ type Tabbar = {
   selectIcon: string,
   path: string,
   position: string,
-  text: string
+  text: string,
+  keep: boolean,
+  hidden: boolean,
+  index: number
 }

@@ -72,7 +72,7 @@ export const requestFun = (
   }
 
   if (!success && !fail && !complete) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve:(value:any) => void, reject) => {
       uni.request({
         method: method,
         url: url,

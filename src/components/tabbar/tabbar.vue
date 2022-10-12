@@ -7,28 +7,32 @@
     <template v-for="(item, index) in tabbarList" :key="index">
 
       <template v-if="item.position === 'center'">
-        <image class="w-[93rpx] h-[72rpx]" 
+        <image :lazy-load="true"
+          class="w-[93rpx] h-[72rpx]" 
           :src="item.icon"  
-          @click="tabbarChange(index, item.path)">
+          @click="tabbarChange(item.index, item.path)">
         </image>
       </template>
 
       <template v-else>
         <view class="h-[100rpx] flex flex-col justify-center items-center" 
-          @click="tabbarChange(index, item.path)">
+          @click="tabbarChange(item.index, item.path)"
+          v-if="!item.hidden">
 
-          <image v-show="tabbarIndex == index" 
+          <image v-show="tabbarIndex == item.index || item.keep" 
+            :lazy-load="true"
             class="w-[59rpx] h-[59rpx] will-change-transform" 
             :src="item.selectIcon">
           </image>
 
-          <image v-show="tabbarIndex != index" 
+          <image v-show="tabbarIndex != item.index && !item.keep" 
+            :lazy-load="true"
             class="w-[59rpx] h-[59rpx] will-change-transform" 
             :src="item.icon">
           </image>
 
           <view :class="['text-[20rpx]', 'mt-[3rpx]', 'font-bold', 
-            `${tabbarIndex == index ? 'text-tabbar-selected' : 'text-tabbar-default'}`]">{{item.text}}</view>
+            `${tabbarIndex == item.index || item.keep ? 'text-tabbar-selected' : 'text-tabbar-default'}`]">{{item.text}}</view>
 
         </view>
       </template>

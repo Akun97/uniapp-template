@@ -1,11 +1,3 @@
-/*
- * @Author: Akun97 17759735780@163.com
- * @Date: 2022-06-13 11:11:59
- * @LastEditors: Akun97 17759735780@163.com
- * @LastEditTime: 2022-06-13 11:12:23
- * @FilePath: \uniapp_template\src\hooks\update.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 export const update = () => {
 
   if (uni.canIUse('getUpdateManager')) {

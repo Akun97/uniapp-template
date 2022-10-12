@@ -5,7 +5,7 @@ export const initFunc = () => {
 
   onShow(() => {
     initTabbar(0);
-    (api.banner.selectShowList() as Promise<unknown>).then(res => {
+    (api.banner.selectShowList() as Promise<result>).then(res => {
       console.log(res)
     });
     api.banner.selectShowList({
