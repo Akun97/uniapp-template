@@ -1,15 +1,18 @@
 export class RequestMethods {
 
-  static init = (param: request = {}, need?:needToken) => {
+  static init = (param: request = {}, need?:need) => {
     const success:((any: any) => void) | undefined = param?.success;
     const fail:((any: any) => void) | undefined = param?.fail;
     const complete:((any: any) => void) | undefined = param?.complete;
     param?.success && delete param.success;
     param?.fail && delete param.fail;
     param?.complete && delete param.complete;
-    param.token = need?.token;
+    const paramRes = {
+      ...param,
+      ...need
+    }
     return {
-      param,
+      paramRes,
       success,
       fail,
       complete
@@ -36,22 +39,22 @@ export class RequestMethods {
     })).join('&');
   }
 
-  static get = (url:string, something: request = {}, need?:needToken) => {
-    const { param, success, fail, complete } = this.init(something, need);
-    return requestFun('GET', url, param, success, fail, complete);
+  static get = (url:string, something: request = {}, need?:need) => {
+    const { paramRes, success, fail, complete } = this.init(something, need);
+    return requestFun('GET', url, paramRes, success, fail, complete);
   }
 
-  static post = (url:string, something: request = {}, need?:needToken) => {
-    const { param, success, fail, complete } = this.init(something, need);
-    if (!param.data) param.data = {};
-    return requestFun('POST', url, param, success, fail, complete);
+  static post = (url:string, something: request = {}, need?:need) => {
+    const { paramRes, success, fail, complete } = this.init(something, need);
+    if (!paramRes.data) paramRes.data = {};
+    return requestFun('POST', url, paramRes, success, fail, complete);
   }
 
-  static delete = (url:string, something: request = {}, need?:needToken) => {
-    const { param, success, fail, complete } = this.init(something, need);
-    const str = this.querystring(param.data);
-    param?.data && delete param.data;
-    return requestFun('DELETE', `${url}?${str}`, param, success, fail, complete);
+  static delete = (url:string, something: request = {}, need?:need) => {
+    const { paramRes, success, fail, complete } = this.init(something, need);
+    const str = this.querystring(paramRes.data);
+    paramRes?.data && delete paramRes.data;
+    return requestFun('DELETE', `${url}?${str}`, paramRes, success, fail, complete);
   }
 
 }

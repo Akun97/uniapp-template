@@ -1,30 +1,25 @@
-type requestConfig = {
-  data?: any
-  token?: boolean,
-  header?: any,
-  timeout?: number,
-  dataType?: string,
-  responseType?: string
+interface need {
+  token?: boolean;
+  formData?: boolean;
 }
 
-type request = {
-  data?: any,
-  token?: boolean,
-  header?: any,
-  timeout?: number,
-  dataType?: string,
-  responseType?: string,
+interface requestConfig extends need {
+  data?: any;
+  header?: any;
+  timeout?: number;
+  dataType?: string;
+  responseType?: string;
+}
+
+interface request extends requestConfig {
   success?:(any: any) => void, 
   fail?:(any: any) => void, 
   complete?:(any: any) => void
 }
 
-type needToken = {
-  token?: boolean
-}
-
-type result = {
-  code:string | number, 
-  data:any, 
-  msg:string
+interface result {
+  code:string | number; 
+  rows: any;
+  data:any; 
+  msg:string;
 }

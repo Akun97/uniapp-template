@@ -27,15 +27,13 @@ const successFunc = (res:any, callback:(result:result) => void) => {
         uni.navigateTo({
           url: '/member/pages/login/index',
           success: () => {
-            uni.showToast({
-              title: '暂未登录或登录过期，请重新登录',
-              icon: 'none'
-            });
+            toast('暂未登录或登录过期，请重新登录');
           }
         });
       }
       break;
     default:
+      callback && callback(result);
       toast(result.msg??'请求出错');
       break;
   }
@@ -50,17 +48,21 @@ export const requestFun = (
   complete?:(any: any) => void
 ) => {
 
+  let headers = {
+    "Accept":  "application/json,text/x-json,application/jsonrequest,text/json"
+  }
   if (param.header) {
-    param.header = Object.assign(param.header, {
-      "Accept": "application/json,text/x-json,application/jsonrequest,text/json"
-    });
+    param.header = Object.assign(param.header, headers);
   } else {
-    param.header = {
-      "Accept": "application/json,text/x-json,application/jsonrequest,text/json"
-    };
+    param.header = headers;
+  }
+
+  if (param.formData) {
+    param.header['content-type'] = 'application/x-www-form-urlencoded';
   }
 
   if (!param.dataType) param.dataType = 'JSON';
+  if (!param.timeout) param.timeout = 120000;
   if (param.token) {
     if (uni.getStorageSync('token')) {
       param.header['Authorization'] = uni.getStorageSync('token');
