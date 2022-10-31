@@ -86,6 +86,7 @@ declare global {
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
   const useGlobal: typeof import('./src/hooks/useGlobal')['useGlobal']
+  const useJsencrypt: typeof import('./src/hooks/useJsencrypt')['useJsencrypt']
   const useNavbar: typeof import('./src/hooks/useNavbar')['useNavbar']
   const useScroll: typeof import('./src/hooks/useScroll')['useScroll']
   const useSlots: typeof import('vue')['useSlots']
