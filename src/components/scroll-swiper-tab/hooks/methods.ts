@@ -1,10 +1,9 @@
 import { ComponentInternalInstance } from "vue";
 
-export const constructFunc = (emit:any) => {
+export const constructFunc = (props:any, emit:any) => {
 
   const systemInfo = uni.getSystemInfoSync();
   const tabsScrollHeight = ref<number | undefined>(undefined); // tab栏滚动视图高度
-  const tabsScrollLeft = ref<number>(0); // tab栏滚动视图滚动距离
   const tabsItemWidth = ref<number | undefined>(undefined); // tab栏子项宽度
   const tabsLineHeight = ref<number>(uni.upx2px(5)); // tab栏下划线宽度
   const tabsLineWidth = ref<number>(uni.upx2px(29)); // tab栏下划线宽度
@@ -13,7 +12,16 @@ export const constructFunc = (emit:any) => {
   const dataTop = ref<number>(0); // tab栏离顶部的距离
   const scrollIntoView = ref<string>(''); // 操作数据列表滚动到指定元素
   const { proxy } = (getCurrentInstance() as ComponentInternalInstance);
-  const refresherTriggered = ref<boolean>(false);
+  const refresherTriggered = ref<boolean[]>([]);
+  const clickTime = ref<number>(0);
+
+  watch(() => props.data, (newV, oldV) => {
+    if (refresherTriggered.value.length === 0) {
+      refresherTriggered.value = newV.map((item:any) => false);
+    }
+  }, {
+    deep: true
+  });
 
   const getTabHeight = ():void => { // 获取tab栏高度
     uni.createSelectorQuery().in(proxy).select(".sst-tabs-scroll").boundingClientRect(data => {
@@ -63,7 +71,10 @@ export const constructFunc = (emit:any) => {
   }
   
   const tabsChange = (index: number):void => {
-    emit('update:tabsIndex', index);
+    if (clickTime.value === 0 || (new Date().getTime() - clickTime.value > 500)) {
+      clickTime.value = new Date().getTime();
+      emit('update:tabsIndex', index);
+    }
   }
   
   const swiperChange = (e:any):void => {
@@ -75,25 +86,18 @@ export const constructFunc = (emit:any) => {
   const tabsScroll = (current: number):void => { // tab栏滚动方法
     if (tabsItemWidth.value) {
       tabsLineOffset.value = tabsItemWidth.value * current + (tabsItemWidth.value - tabsLineWidth.value)/2;
-      const screenWidth = systemInfo.windowWidth; // 屏幕宽度
-      const scrollLeft = (current + 2) * tabsItemWidth.value; // 当前项+下一项宽度
-      if (scrollLeft >= screenWidth) { // 超出屏幕宽度滚动当前项之前所有子项宽度-半屏宽度
-        tabsScrollLeft.value = current * tabsItemWidth.value - (screenWidth / 2);
-      } else {
-        tabsScrollLeft.value = 0;
-      }
     }
   }
 
   const refresh = (index:number):void => {
-    if (!refresherTriggered.value) {
-      refresherTriggered.value = true;
+    if (!refresherTriggered.value[index]) {
+      refresherTriggered.value[index] = true;
       emit('refresh', index);
       setTimeout(() => {
-        refresherTriggered.value = false;
+        refresherTriggered.value[index] = false;
       }, 500);
     } else {
-      refresherTriggered.value = false;
+      refresherTriggered.value[index] = false;
     }
   }
 
@@ -103,7 +107,6 @@ export const constructFunc = (emit:any) => {
 
   return {
     tabsScrollHeight,
-    tabsScrollLeft,
     tabsItemWidth,
     tabsLineOffset,
     scroll,

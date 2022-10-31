@@ -53,7 +53,12 @@ watch(() => props.src, (newV, oldV) => {
 });
 
 watch(() => props.className, (newV, oldV) => {
+  /* #ifdef MP */
   classname.value = replaceJs(props.className);
+  /* #endif */
+  /* #ifdef APP-PLUS || H5 */
+  classname.value = props.className;
+  /* #endif */
 }, { immediate: true });
 
 const onTap = () => {

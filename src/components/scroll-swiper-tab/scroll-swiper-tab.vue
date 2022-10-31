@@ -13,12 +13,12 @@
       <slot></slot>
 
       <slot name="tabs" :tabs="tabs" :change="tabsChange">
-        <view class="w-full"
+        <view class="w-full flex justify-center"
           :style="{paddingTop: `${tabsPaddingTop}rpx`, paddingBottom: `${tabsPaddingBottom}rpx`}">
-          <scroll-view :scroll-x="true" 
-            :scroll-left="tabsScrollLeft"
-            class="sst-tabs-scroll whitespace-nowrap w-full relative" 
-            :style="{ height: tabsScrollHeight ? `${tabsScrollHeight}px` : 'auto' }">
+          <view 
+            class="sst-tabs-scroll whitespace-nowrap w-max relative" 
+            :style="{ height: tabsScrollHeight ? `${tabsScrollHeight}px` : 'auto' }"
+          >
           
             <template v-for="(item, index) in tabs" :key="index">
               <view class="sst-tabs text-center inline-block"
@@ -45,9 +45,11 @@
               </view>
             </template>
           
-          </scroll-view>
+          </view>
         </view>
       </slot>
+
+      <slot name="middle"></slot>
 
       <view class="flex-1 h-full overflow-hidden">
         <swiper class="w-full h-full" @change="swiperChange" :current="(tabsIndex as number)">
@@ -56,9 +58,9 @@
               <scroll-view class="w-full h-full" 
                 :scroll-y="scroll"
                 :refresher-enabled="refresherEnabled" 
-                :refresher-triggered="refresherTriggered" 
-                @refresherrefresh="refresh(tabsIndex)"
-                @scrolltolower="loadmore(tabsIndex)">
+                :refresher-triggered="refresherTriggered[i]" 
+                @refresherrefresh="refresh(i)"
+                @scrolltolower="loadmore(i)">
                 <slot name="list" :list="list" :index="i"></slot>
               </scroll-view>
             </swiper-item>
@@ -98,7 +100,6 @@ const emit = defineEmits(['change', 'update:tabsIndex', 'refresh', 'loadmore']);
 
 const {
   tabsScrollHeight,
-  tabsScrollLeft,
   tabsItemWidth,
   tabsLineOffset,
   scroll,
@@ -112,7 +113,7 @@ const {
   swiperChange,
   refresh,
   loadmore
-} = constructFunc(emit);
+} = constructFunc(props, emit);
 
 onMounted(() => {
   if (!props.sticky) {
