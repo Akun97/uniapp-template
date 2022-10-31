@@ -21,8 +21,7 @@ const vitePlugins = [
     dirs: [
       'src/hooks',
       'src/store',
-      'src/server',
-      'src/model/userInfo'
+      'src/server'
     ]
   })
 ];

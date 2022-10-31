@@ -1,3 +1,5 @@
+import { ResultModel } from '@/model/result';
+
 export const initFunc = () => {
 
   const { initTabbar } = useTabbar();
@@ -5,12 +7,14 @@ export const initFunc = () => {
 
   onShow(() => {
     initTabbar(0);
-    (api.banner.selectShowList() as Promise<result>).then(res => {
-      console.log(res)
+    (api.banner.selectShowList() as Promise<result>).then((res:result) => {
+      const result = new ResultModel(res);
+      console.log(result)
     });
     api.banner.selectShowList({
-      success: res => {
-        console.log(res)
+      success: (res:result) => {
+        const result = new ResultModel(res);
+        console.log(result)
       }
     });
   });
