@@ -6,3 +6,7 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare module 'js-cookie';
+declare module 'jsencrypt/bin/jsencrypt.min';
+declare module 'mp-html/dist/uni-app/components/mp-html/mp-html';
