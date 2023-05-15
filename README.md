@@ -1,4 +1,6 @@
 ```
+#node版本
+16.17.0
 #运行小程序端
 npm run dev:mp-weixin
 #运行h5端
