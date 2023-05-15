@@ -1,13 +1,15 @@
 <template>
-  <custom-page :hasTabbar="true" 
-    title="校友通"
+  <custom-page 
+    :hasTabbar="true" 
+    title="demo"
     :refresherEnabled="true"
     :fixedNavBar="true"
     :fixedNavBarObj="{
       data: list,
       activeBg: '#31C6B2',
       activeText: '#FFFFFF'
-    }">
+    }"
+  >
     <template v-slot:content>
       <view class="w-full flex flex-col">
         <swiper class="w-full h-[556rpx]"
@@ -31,9 +33,24 @@
 </template>
 
 <script setup lang="ts">
-import { initFunc } from '@/pages/index/hooks/methods';
+import { ResultModel } from '@/model/result';
 
-const { list } = initFunc();
 const { fileUrl } = useGlobal();
+const { initTabbar } = useTabbar();
+const list = ref<string[]>(['/static/2022/06/13/8677e8e3-162e-4cc1-908e-002b39956eb0.png']);
+
+onShow(() => {
+  initTabbar(0);
+  (api.banner.selectShowList() as Promise<result>).then((res:result) => {
+    const result = new ResultModel(res);
+    console.log(result)
+  });
+  api.banner.selectShowList({
+    success: (res:result) => {
+      const result = new ResultModel(res);
+      console.log(result)
+    }
+  });
+});
 
 </script>

@@ -1,5 +1,8 @@
 <template>
-  <custom-page :hasTabbar="true" title="校友通">
+  <custom-page 
+    :hasTabbar="true" 
+    title="demo"
+  >
     <template v-slot:content>
       <view class="w-full">3</view>
     </template>
@@ -7,8 +10,10 @@
 </template>
 
 <script setup lang="ts">
-import { initFunc } from '@/pages/celebrate/hooks/methods';
+const { initTabbar } = useTabbar();
 
-initFunc();
+onShow(() => {
+  initTabbar(2);
+});
 
 </script>

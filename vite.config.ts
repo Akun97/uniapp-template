@@ -1,41 +1,47 @@
 import { defineConfig, loadEnv } from "vite";
 import uni from "@dcloudio/vite-plugin-uni";
 import { resolve } from "path";
-import { ViteWeappTailwindcssPlugin as vwt, postcssWeappTailwindcssRename } from 'weapp-tailwindcss-webpack-plugin';
+import { UnifiedViteWeappTailwindcssPlugin as uvtw } from 'weapp-tailwindcss-webpack-plugin/vite';
 import AutoImport from 'unplugin-auto-import/vite';
-import vueApi from "./vue-api";
-import uniappApi from "./uniapp-api";
-
+import Components from 'unplugin-vue-components/vite';
+import rem2px from 'postcss-rem-to-responsive-pixel';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 const isH5 = process.env.UNI_PLATFORM === 'h5';
+const isApp = process.env.UNI_PLATFORM === 'app';
+const WeappTailwindcssDisabled = isH5 || isApp;
 
 const vitePlugins = [
   uni(), 
-  !isH5 ? vwt() : undefined,
+  WeappTailwindcssDisabled ? undefined : uvtw(),
   AutoImport({
     imports: [
-      {
-        "vue": vueApi,
-        "@dcloudio/uni-app": uniappApi
-      }
+      "vue",
+      "uni-app"
     ],
+    ignore: ['createApp'],
     dirs: [
       'src/hooks',
       'src/store',
       'src/server'
     ]
-  })
+  }),
+  Components({
+    dirs: [
+      'src/components'
+    ]
+  }),
 ];
 // postcss 插件配置
-const postcssPlugins = [require('autoprefixer')(), require('tailwindcss')()];
-if (!isH5) {
+const postcssPlugins:any[] = [tailwindcss(), autoprefixer()]
+if (!WeappTailwindcssDisabled) {
   postcssPlugins.push(
-    require('postcss-rem-to-responsive-pixel')({
+    rem2px({
       rootValue: 32,
       propList: ['*'],
       transformUnit: 'rpx'
     })
   );
-  postcssPlugins.push(postcssWeappTailwindcssRename());
 }
 // https://vitejs.dev/config/
 export default (({ mode }) => {
@@ -54,11 +60,23 @@ export default (({ mode }) => {
       // css预处理
       preprocessorOptions: {
         scss: {
-          additionalData: '@import "@/styles/icons/iconfont.scss";'
+          additionalData: `
+            @import "@/styles/icons/iconfont.scss";
+          `
         }
       },
       postcss: {
         plugins: postcssPlugins
+      }
+    },
+    server: {
+      proxy: {
+        '/api-prefix-dev': {
+          target: 'http://0.0.0.0:80',
+          secure: false,
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/api-prefix-dev/, '')
+        }
       }
     }
   });  

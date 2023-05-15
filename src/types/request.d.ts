@@ -18,8 +18,11 @@ interface request extends requestConfig {
 }
 
 interface result {
-  code:string | number; 
+  code: any; 
   rows: any;
   data:any; 
   msg:string;
+  doing: boolean;
+  other: any;
+  successful: boolean;
 }

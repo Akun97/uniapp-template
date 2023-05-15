@@ -1,44 +1,56 @@
 <template>
-  <view v-if="!refresherTriggered && !refresherReady"
-    :class="['w-full', data.length === 0 ? '' : 'top-0 left-0 z-10 fixed']">
-    <view class="w-full flex items-center justify-center transition-all ease-linear duration-300" 
+  <view 
+    v-if="!refresherTriggered && !refresherReady"
+    :class="`w-full ${data.length === 0 ? '' : 'top-0 left-0 z-10 fixed'}`"
+  >
+    <view 
+      class="w-full flex items-center justify-center transition-all ease-linear duration-300" 
       :style="{
         height: `${navbarHeight() + (statusBarHeight??0)}px`,
         paddingTop: `${(statusBarHeight??0)}px`,
         backgroundColor: data.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0)) ? activeBg : defaultBg
-      }">
+      }"
+    >
 
       <template v-if="!hasTabbar">
-        <view class="left-0 flex items-center justify-center absolute"
+        <view 
+          class="left-0 flex items-center justify-center absolute"
           :style="{
             width: `${navbarHeight()}px`,
             height: `${navbarHeight()}px`,
             top: `${statusBarHeight}px`
-          }" @click="back">
+          }" @click="back"
+        >
 
           <template v-if="pagesLength != 1">
-            <view class="text-[34rpx] iconfont icon-fanhui1"
+            <view 
+              class="text-[34rpx] iconfont icon-fanhui1"
               :style="{
                 color: data.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0)) ? activeText : defaultText
-              }">
-            </view>
+              }"
+            ></view>
           </template>
 
           <template v-else>
-            <view class="text-[34rpx] iconfont icon-home"
+            <view 
+              class="text-[34rpx] iconfont icon-home"
               :style="{
                 color: data.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0)) ? activeText : defaultText
-              }">
-            </view>
+              }"
+            ></view>
           </template>
 
         </view>
       </template>
 
-      <view class="text-[34rpx] font-extrabold tracking-[3rpx]"
+      <view 
+        class="text-[34rpx] font-extrabold tracking-[3rpx]"
         :style="{
           color: data.length === 0 || scrollTop > (navbarHeight() + (statusBarHeight??0)) ? activeText : defaultText
-        }">{{title}}</view>
+        }"
+      >
+        <text>{{title}}</text>
+      </view>
 
     </view>
   </view>

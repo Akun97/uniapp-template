@@ -1,17 +1,22 @@
 <template>
-  <view class="w-full bg-theme flex items-center justify-center relative" 
+  <view 
+    class="w-full bg-theme flex items-center justify-center relative shadow-00320-#1677FF-005 z-10" 
     :style="{
       height: `${navbarHeight() + (statusBarHeight??0)}px`,
       paddingTop: `${(statusBarHeight??0)}px`
-    }">
+    }"
+  >
 
     <template v-if="!hasTabbar">
-      <view class="left-0 flex items-center justify-center absolute"
+      <view 
+        class="left-0 flex items-center justify-center absolute"
         :style="{
           width: `${navbarHeight()}px`,
           height: `${navbarHeight()}px`,
           top: `${statusBarHeight}px`
-        }" @click="back">
+        }" 
+        @click="back"
+      >
 
         <template v-if="pagesLength != 1">
           <view class="text-white text-[36rpx] iconfont icon-fanhui1"></view>

@@ -1,3 +1,5 @@
+import jsCookie from 'js-cookie';
+
 const toast = (msg:string):void => {
   uni.showToast({
     title: msg,
@@ -6,7 +8,7 @@ const toast = (msg:string):void => {
 }
 
 const successFunc = (res:any, callback:(result:result) => void) => {
-  if (res.statusCode !== 200) {
+  if (res.statusCode !== 200 && res.statusCode !== 403) {
     toast('请求出错');
     return;
   }
@@ -17,19 +19,24 @@ const successFunc = (res:any, callback:(result:result) => void) => {
     result = res.data as result;
   }
   switch (result.code) {
+    case null:
+    case undefined:
     case 200:
     case 'C00000':
       callback && callback(result);
       break;
     case 401:
-      if (uni.getStorageSync('token')) {
-        uni.removeStorageSync('token');
-        uni.navigateTo({
-          url: '/member/pages/login/index',
-          success: () => {
-            toast('暂未登录或登录过期，请重新登录');
-          }
-        });
+      if (jsCookie.get('token')) {
+        jsCookie.set('token', '');
+        const currentRoute = getCurrentPages()[getCurrentPages().length - 1]?.route;
+        if (currentRoute) {
+          uni.redirectTo({
+            url: `/member/pages/login/index?targetUrl=/${currentRoute}`,
+            success: () => {
+              toast('登录过期，请重新登录');
+            }
+          });
+        }
       }
       break;
     default:
@@ -64,12 +71,18 @@ export const requestFun = (
   if (!param.dataType) param.dataType = 'JSON';
   if (!param.timeout) param.timeout = 120000;
   if (param.token) {
-    if (uni.getStorageSync('token')) {
-      param.header['Authorization'] = uni.getStorageSync('token');
+    if (jsCookie.get('token')) {
+      param.header['Authorization'] = jsCookie.get('token');
     } else {
-      uni.navigateTo({
-        url: '/member/pages/login/index'
-      });
+      const currentRoute = getCurrentPages()[getCurrentPages().length - 1]?.route;
+      if (currentRoute) {
+        uni.redirectTo({
+          url: `/member/pages/login/index?targetUrl=/${currentRoute}`,
+          success: () => {
+            toast('暂未登录');
+          }
+        });
+      }
     }
   }
 

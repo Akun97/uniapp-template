@@ -1,7 +1,9 @@
 <template>
-  <custom-page :hasTabbar="true" 
-    title="校友通"
-    :refresherEnabled="true">
+  <custom-page 
+    :hasTabbar="true" 
+    title="demo"
+    :refresherEnabled="true"
+  >
     <template v-slot:content>
       <view class="w-full">
         <view class="w-full h-[300rpx] bg-red-600"></view>
@@ -16,8 +18,10 @@
 </template>
 
 <script setup lang="ts">
-import { initFunc } from '@/pages/educate/hooks/methods';
+const { initTabbar } = useTabbar();
 
-initFunc();
+onShow(() => {
+  initTabbar(1);
+});
 
 </script>

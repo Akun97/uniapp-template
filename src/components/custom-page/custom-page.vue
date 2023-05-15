@@ -1,14 +1,17 @@
 <template>
-  <view :class="['w-full', 'h-full', 'flex', 'flex-col', `${backgroundColor}`]" 
+  <view 
+    :class="`w-full h-full flex flex-col ${backgroundColor}`" 
     :style="{ 
-      paddingBottom: hasTabbar ? 0 : 'env(safe-area-inset-bottom)',
-    }">
+      paddingBottom: hasTabbar ? 0 : safeArea ? 'env(safe-area-inset-bottom)' : 0,
+    }"
+  >
 
     <slot name="navbar">
       <template v-if="hasNavbar">
         
         <template v-if="fixedNavBar">
-          <transparent-navbar :scrollTop="scrollTop"
+          <transparent-navbar 
+            :scrollTop="scrollTop"
             :hasTabbar="hasTabbar"
             :title="title"
             :refresherTriggered="refresherTriggered"
@@ -17,8 +20,8 @@
             :defaultBg="fixedNavBarObj.defaultBg"
             :activeBg="fixedNavBarObj.activeBg"
             :defaultText="fixedNavBarObj.defaultText"
-            :activeText="fixedNavBarObj.activeText">
-          </transparent-navbar>
+            :activeText="fixedNavBarObj.activeText"
+          ></transparent-navbar>
         </template>
 
         <template v-else>
@@ -29,9 +32,10 @@
     </slot>
 
     <view class="flex-1 h-full overflow-hidden">
-      <scroll-view class="w-full h-full" 
+      <scroll-view 
+        class="w-full h-full" 
         :scroll-y="scroll" 
-        refresher-background="#F0F2F5"
+        refresher-background="transparent"
         :refresher-enabled="refresherEnabled" 
         :refresher-triggered="refresherTriggered" 
         @refresherrefresh="refresh"
@@ -39,7 +43,8 @@
         @refresherrestore="refresherReady = false"
         @refresherabort="refresherTriggered = false; refresherReady = false;"
         @scrolltolower="loadmore"
-        @scroll="onScroll">
+        @scroll="onScroll"
+      >
         <slot name="content"></slot>
       </scroll-view>
     </view>
@@ -62,6 +67,7 @@ interface fixedNavObject {
 }
 
 interface Props {
+  safeArea?: boolean, // 是否适配底部安全区
   hasNavbar?: boolean, // 是否需要顶部导航栏
   hasTabbar?: boolean, // 是否需要底部导航栏
   title?: string, // 导航栏标题
@@ -72,6 +78,7 @@ interface Props {
   fixedNavBarObj?: fixedNavObject // 开启定位导航栏配置项
 }
 const props = withDefaults(defineProps<Props>(), {
+  safeArea: true,
   hasNavbar: true,
   hasTabbar: false,
   title: '',

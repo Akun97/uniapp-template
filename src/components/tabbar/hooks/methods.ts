@@ -6,7 +6,7 @@ export const constructFunc = () => {
       selectIcon: '/static/tabbar/icon_index_selected.png',
       path: '/pages/index/index', 
       position: 'other', 
-      text: '首页',
+      text: 'tab1',
       keep: false,
       hidden: false,
       index: 0
@@ -16,7 +16,7 @@ export const constructFunc = () => {
       selectIcon: '/static/tabbar/icon_group_selected.png',
       path: '/pages/educate/index', 
       position: 'other', 
-      text: '教育促进会',
+      text: 'tab2',
       keep: false,
       hidden: false,
       index: 1
@@ -36,7 +36,7 @@ export const constructFunc = () => {
       selectIcon: '/static/tabbar/icon_template_selected.png', 
       path: '/pages/donate/index', 
       position: 'other', 
-      text: '校友捐赠',
+      text: 'tab4',
       keep: false,
       hidden: false,
       index: 3
@@ -46,7 +46,7 @@ export const constructFunc = () => {
       selectIcon: '/static/tabbar/icon_user_selected.png', 
       path: '/pages/member/index', 
       position: 'other', 
-      text: '我的',
+      text: 'tab5',
       keep: false,
       hidden: false,
       index: 4

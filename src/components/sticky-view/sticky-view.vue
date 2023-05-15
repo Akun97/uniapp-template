@@ -1,21 +1,28 @@
 <template>
-  <scroll-view id="scroll" 
+  <scroll-view 
+    id="scroll" 
     class="w-full h-full" 
     :scroll-y="true" 
     :scroll-into-view="scrollIntoView" 
-    @scroll="scrollListener">
+    @scroll="scrollListener"
+  >
 
     <slot></slot>
 
     <slot name="top"></slot>
 
-    <view id="data" 
+    <view 
+      id="data" 
       :style="{ marginTop: `${headerTop}rpx` }"
-      class="w-full h-full flex flex-col">
+      class="w-full h-full flex flex-col"
+    >
 
       <slot name="header"></slot>
       
-      <view class="flex-1 h-full overflow-hidden" :style="{ marginTop: `${listTop}rpx` }">
+      <view 
+        class="flex-1 h-full overflow-hidden" 
+        :style="{ marginTop: `${listTop}rpx` }"
+      >
         <scroll-view class="w-full h-full" :scroll-y="scroll">
           <slot name="list"></slot>
         </scroll-view>

@@ -4,6 +4,8 @@ export const useGlobal = () => {
 
   const ossUrl = process.env.VITE_OSS_URL;
 
+  const baseUrl = process.env.VITE_REQUEST_URL;
+
   const devIng = ():void => {
     uni.showModal({
       content: '正在建设中，敬请期待',
@@ -44,6 +46,7 @@ export const useGlobal = () => {
   return {
     fileUrl,
     ossUrl,
+    baseUrl,
     devIng,
     htmlGetPlainText,
     preventReClick

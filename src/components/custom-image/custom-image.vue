@@ -1,23 +1,33 @@
 <template>
-  <view :class="[classname, 'overflow-hidden', 'relative']" 
-    :style="{ backgroundColor: show ? 'transparent' : '#EEEEEE' }"
-    @click="onTap">
+  <view 
+    :class="`${classname} overflow-hidden relative`" 
+    :style="{ backgroundColor: show ? 'transparent' : '#F5F5F5' }"
+    @click="onTap"
+  >
     <template v-if="src">
-      <view v-if="!show" class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
+
+      <view v-if="!show && !error" class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
         <view class="circle-loader">
           <template v-for="(item, index) in 8" :key="index">
             <view class="circle-loader-item"></view>
           </template>
         </view>
       </view>
-      <image :class="[
-          'w-full h-full', 
-          transition ? 'transition-all ease-linear duration-500' : '',
-          show ? '' : 'opacity-0'
-        ]" 
+
+      <view v-if="error" class="absolute top-0 left-0 w-full h-full flex justify-center items-center">
+        <image class="h-full" mode="heightFix" src="/static/common/image_error.png"></image>
+      </view>
+
+      <image 
+        :class="`
+          w-full h-full 
+          ${transition ? 'transition-all ease-linear duration-500' : ''} 
+          ${show ? '' : 'opacity-0'}
+        `" 
         :src="src" 
         :lazy-load="true"
         @load="imageLoad"
+        @error="imageError"
         :mode="mode">
       </image>
     </template>
@@ -25,12 +35,13 @@
 </template>
 
 <script setup lang="ts">
-import { replaceJs } from 'weapp-tailwindcss-webpack-plugin/replace'
+import { replaceJs } from 'weapp-tailwindcss-webpack-plugin/replace';
+import type { ImageMode } from '@uni-helper/uni-app-types';
 
 interface Props {
   className?: string,
   src?: string,
-  mode?: string
+  mode?: ImageMode
 }
 const props = withDefaults(defineProps<Props>(), {
   className: '',
@@ -38,14 +49,15 @@ const props = withDefaults(defineProps<Props>(), {
   mode: 'scaleToFill'
 });
 const emit = defineEmits(['click']);
-
 const show = ref<boolean>(false);
+const error = ref<boolean>(false);
 const transition = ref<boolean>(true);
 const classname = ref<string>('');
 
 watch(() => props.src, (newV, oldV) => {
   if (newV != oldV) {
     show.value = false;
+    error.value = false;
     setTimeout(() => {
       transition.value = true;
     }, 1);
@@ -70,6 +82,10 @@ const imageLoad = () => {
   setTimeout(() => {
     transition.value = false;
   }, 500);
+}
+
+const imageError = () => {
+  error.value = true;
 }
 
 </script>

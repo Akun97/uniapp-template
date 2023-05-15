@@ -1,6 +1,6 @@
 {
 	"easycom": {
-		"autoscan": true,
+		"autoscan": false,
 		"custom": {
 			// uni-ui
 			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
@@ -99,21 +99,29 @@
 	],
 	"tabBar": {
 		"borderStyle": "white",
+		"color": "",
+		"selectedColor": "",
+		"backgroundColor": "",
 		"list": [
 			{
-				"pagePath": "pages/index/index"
+				"pagePath": "pages/index/index",
+				"text": ""
 			},
 			{
-				"pagePath": "pages/educate/index"
+				"pagePath": "pages/educate/index",
+				"text": ""
 			},
 			{
-				"pagePath": "pages/celebrate/index"
+				"pagePath": "pages/celebrate/index",
+				"text": ""
 			},
 			{
-				"pagePath": "pages/donate/index"
+				"pagePath": "pages/donate/index",
+				"text": ""
 			},
 			{
-				"pagePath": "pages/member/index"
+				"pagePath": "pages/member/index",
+				"text": ""
 			}
 		]
 	},
@@ -133,7 +141,7 @@
 			{
 				"name": "首页",
 				"path": "pages/index/index"
-				// "query": "title=反馈接龙&code=feedback"
+				// "query": "title=首页&code=home"
 			}
 		]
 	}

@@ -39,4 +39,7 @@ page {
   touch-action: pan-y;
 }
 /* #endif */
+.tdt-control-copyright {
+  display: none !important;
+}
 </style>

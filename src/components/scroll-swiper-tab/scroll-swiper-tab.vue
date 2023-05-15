@@ -1,10 +1,12 @@
 <!-- tab滚动列表（附带切换动画，吸顶功能） -->
 <template>
-  <scroll-view id="scroll" 
+  <scroll-view 
+    id="scroll" 
     class="w-full h-full"
     :scroll-y="sticky" 
     :scroll-into-view="scrollIntoView" 
-    @scroll="scrollListener">
+    @scroll="scrollListener"
+  >
 
     <slot name="top"></slot>
 
@@ -13,36 +15,47 @@
       <slot></slot>
 
       <slot name="tabs" :tabs="tabs" :change="tabsChange">
-        <view class="w-full flex justify-center"
-          :style="{paddingTop: `${tabsPaddingTop}rpx`, paddingBottom: `${tabsPaddingBottom}rpx`}">
+        <view 
+          class="w-full flex justify-center bg-white shadow-00320-#1677FF-005 z-10"
+          :style="{paddingTop: `${tabsPaddingTop}rpx`, paddingBottom: `${tabsPaddingBottom}rpx`}"
+        >
           <view 
             class="sst-tabs-scroll whitespace-nowrap w-max relative" 
             :style="{ height: tabsScrollHeight ? `${tabsScrollHeight}px` : 'auto' }"
           >
           
             <template v-for="(item, index) in tabs" :key="index">
-              <view class="sst-tabs text-center inline-block"
+              <view 
+                class="sst-tabs text-center inline-block"
                 :style="{ 
                   width: tabsItemWidth ? `${tabsItemWidth}px` : 'auto',
                   paddingLeft: `${itemSpace}rpx`,
                   paddingRight: `${itemSpace}rpx`
                 }"
-                @click="tabsChange(index)">         
-                <view :class="['text-[32rpx]', 'pb-[16rpx]', 
-                  tabsIndex == index ? 'text-theme' : 'text-gray-100']" 
+                @click="tabsChange(index)"
+              >         
+                <view 
+                  :class="`
+                    text-[32rpx] pb-[16rpx] 
+                    ${tabsIndex == index ? 'text-theme' : 'text-gray-100'}
+                  `" 
                   :style="{
                     fontWeight: tabsIndex == index ? 'bold' : 500
-                  }">
-                  {{item}}
+                  }"
+                >
+                  <text>{{item}}</text>
                 </view>
               </view>
             </template>
                 
             <template v-if="tabsLineOffset">
-              <view class="w-[29rpx] h-[5rpx] rounded-[2rpx] bg-theme absolute
-                transition-all duration-200 ease-linear" 
-                :style="{ left: `${tabsLineOffset}px` }">
-              </view>
+              <view 
+                :class="`
+                  w-[29rpx] h-[5rpx] rounded-[2rpx] bg-theme absolute 
+                  transition-all duration-200 ease-linear
+                `" 
+                :style="{ left: `${tabsLineOffset}px` }"
+              ></view>
             </template>
           
           </view>
@@ -55,12 +68,15 @@
         <swiper class="w-full h-full" @change="swiperChange" :current="(tabsIndex as number)">
           <template v-for="(list, i) in data" :key="i">
             <swiper-item>
-              <scroll-view class="w-full h-full" 
+              <scroll-view 
+                class="w-full h-full" 
                 :scroll-y="scroll"
+                refresher-background="transparent"
                 :refresher-enabled="refresherEnabled" 
                 :refresher-triggered="refresherTriggered[i]" 
                 @refresherrefresh="refresh(i)"
-                @scrolltolower="loadmore(i)">
+                @scrolltolower="loadmore(i)"
+              >
                 <slot name="list" :list="list" :index="i"></slot>
               </scroll-view>
             </swiper-item>
