@@ -24,13 +24,19 @@ npm run build:h5
 
 文档：https://tailwindcss.com/
 
-3.ui框架：uni-ui:https://uniapp.dcloud.net.cn/component/uniui/uni-ui.html
+3.ui框架：
+
+uni-ui:https://uniapp.dcloud.net.cn/component/uniui/uni-ui.html
 
 thorui:https://thorui.cn/doc/docs/introduce.html
 
-通过easycom自动引入，无需再写import语句
+nutui:https://www.uniapp-nutui.tech
 
-自定义组件遵循easycom命名方式:components/组件名/组件名.vue
+uni通过easycom按需引入
+nutui通过easycom按需引入
+thorui通过unplugin-vue-components按需引入
+自定义组件通过unplugin-vue-components按需引入
+无需再写import语句
 
 **4.自定义组件看注释**
 

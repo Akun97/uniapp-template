@@ -20,6 +20,7 @@ onHide(() => {
 <style lang="scss">
 @import 'tailwindcss/base';
 @import 'tailwindcss/utilities';
+@import 'uniapp-nutui/styles/index';
 page {
 	width: 100%;
 	height: 100%;
@@ -29,6 +30,7 @@ page {
   width: 0;
   height: 0;
   color: transparent;
+  display: none;
 }
 /* #ifdef APP-PLUS || H5 */
 *, ::before, ::after {
@@ -36,7 +38,7 @@ page {
   border-width: 0;
   border-style: solid;
   border-color: currentColor;
-  touch-action: pan-y;
+  touch-action: pan-x pan-y;
 }
 /* #endif */
 .tdt-control-copyright {

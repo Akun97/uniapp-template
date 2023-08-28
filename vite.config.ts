@@ -4,6 +4,7 @@ import { resolve } from "path";
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from 'weapp-tailwindcss-webpack-plugin/vite';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
+import { ThorUIResolver } from './resolver';
 import rem2px from 'postcss-rem-to-responsive-pixel';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
@@ -12,7 +13,7 @@ const isApp = process.env.UNI_PLATFORM === 'app';
 const WeappTailwindcssDisabled = isH5 || isApp;
 
 const vitePlugins = [
-  uni(), 
+  uni(),
   WeappTailwindcssDisabled ? undefined : uvtw(),
   AutoImport({
     imports: [
@@ -27,10 +28,13 @@ const vitePlugins = [
     ]
   }),
   Components({
+    resolvers: [
+      ThorUIResolver()
+    ],
     dirs: [
       'src/components'
     ]
-  }),
+  })
 ];
 // postcss 插件配置
 const postcssPlugins:any[] = [tailwindcss(), autoprefixer()]
@@ -62,6 +66,7 @@ export default (({ mode }) => {
         scss: {
           additionalData: `
             @import "@/styles/icons/iconfont.scss";
+            @import "uniapp-nutui/styles/variables.scss";
           `
         }
       },
