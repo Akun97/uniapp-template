@@ -1,5 +1,5 @@
 {
-    "name" : "沁猜啦",
+    "name" : "应用名称",
     "appid" : "",
     "description" : "",
     "versionName" : "1.0.0",
@@ -50,7 +50,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx89d2782876aff860",
+        "appid" : "",
         "optimization": {
             "subPackages": true
         },

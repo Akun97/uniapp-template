@@ -129,7 +129,7 @@
 	"globalStyle": {
 		"navigationStyle": "custom",
 		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "沁猜啦",
+		"navigationBarTitleText": "应用名称",
 		"navigationBarBackgroundColor": "#31C6B2",
 		"backgroundColor": "#31C6B2",
 		"backgroundTextStyle": "light",
@@ -140,9 +140,9 @@
 		"current": 0,
 		"list": [
 			{
-				"name": "首页",
-				"path": "pages/index/index"
-				// "query": "title=首页&code=home"
+				"name": "",
+				"path": "",
+				"query": ""
 			}
 		]
 	}
