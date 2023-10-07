@@ -19,6 +19,7 @@ module.exports = {
         'no-data': `url('@/static/common/no_data.png')`,
         'no-record': `url('@/static/common/no_record.png')`,
         'no-result': `url('@/static/common/no_result.png')`,
+        '404': `url('@/static/common/no_found.png')`,
       },
       backgroundSize: {
         'full': '100% 100%'

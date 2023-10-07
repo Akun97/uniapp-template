@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import theme from './theme' // 引入默认主题
-import * as echarts from 'echarts-copy/echarts.js'
+import theme from './theme'; // 引入默认主题
+import * as echarts from 'echarts';
 import chinaJSON from './china.json';
 
 interface Props {
@@ -33,7 +33,7 @@ const charts:{ chart: any } = {
   chart: null
 }
 
-echarts.registerMap('china', chinaJSON);
+echarts.registerMap('china',  JSON.parse(JSON.stringify(chinaJSON)));
 
 /**
  * 初始化echart
@@ -44,6 +44,14 @@ const initChart = (data?: any, clearCaching = false) => {
   if (data || props.options) {
     charts.chart.setOption(data || props.options, clearCaching)
   }
+}
+
+const resize = () => {
+  charts.chart.resize();
+}
+
+const clear = () => {
+  charts.chart.clear();
 }
 
 const dispatchAction = (obj?:any):void => {
@@ -58,6 +66,11 @@ const chartEvent = (event:string, callback:void):void => {
 onMounted(() => {
   // 定义实例
   echarts.registerTheme('myTheme', theme) // 覆盖默认主题
+  echarts.env.wxa = false;
+  echarts.env.domSupported = true;
+  echarts.env.svgSupported = true;
+  echarts.env.transform3dSupported = true;
+  echarts.env.transformSupported = true;
   charts.chart = echarts.init(chartRef.value as HTMLElement, 'myTheme')
   initChart()
 })
@@ -83,7 +96,9 @@ defineExpose({
   chartRef,
   initChart,
   dispatchAction,
-  chartEvent
+  chartEvent,
+  resize,
+  clear
 });
 
 </script>

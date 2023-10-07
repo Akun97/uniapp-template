@@ -4,7 +4,9 @@ interface chartData { name: string; value: any, itemStyle?: any }
  * @description echarts轮播方法返回类型
  * */ 
  type echatsCarousel = {
-  initEchatsCarousel: (val: any[]) => void
+  index: globalThis.Ref<number>
+  initEchatsCarousel: (query:{val: any[], initIndexValue?: number, autoPlay?: boolean, seriesCount?: number }) => void
+  setIndex: (i: number) => void
 }
 
 /**

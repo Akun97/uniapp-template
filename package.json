@@ -54,7 +54,7 @@
     "@dcloudio/uni-quickapp-webview": "3.0.0-3081220230817001",
     "@dcloudio/uni-ui": "^1.4.28",
     "decimal.js": "^10.4.3",
-    "echarts-copy": "file:other_modules/echarts-copy",
+    "echarts": "^5.4.3",
     "js-cookie": "^3.0.5",
     "jsencrypt": "^3.3.2",
     "mp-html": "^2.4.2",

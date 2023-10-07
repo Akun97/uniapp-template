@@ -9,6 +9,5 @@ declare module '*.vue' {
 
 declare module 'js-cookie';
 declare module 'jsencrypt/bin/jsencrypt.min';
-declare module 'echarts-copy/echarts.js';
 declare module 'mp-html/dist/uni-app/components/mp-html/mp-html';
 declare module 'pdfh5';

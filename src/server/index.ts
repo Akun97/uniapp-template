@@ -26,10 +26,10 @@ const successFunc = (res:any, callback:(result:result) => void) => {
       callback && callback(result);
       break;
     case 401:
-      if (jsCookie.get('token')) {
-        jsCookie.set('token', '');
+      if (jsCookie.get('uni-Token')) {
+        jsCookie.set('uni-Token', '');
         const currentRoute = getCurrentPages()[getCurrentPages().length - 1]?.route;
-        if (currentRoute) {
+        if (currentRoute && (currentRoute !== 'member/pages/login/index')) {
           uni.redirectTo({
             url: `/member/pages/login/index?targetUrl=/${currentRoute}`,
             success: () => {
@@ -71,11 +71,11 @@ export const requestFun = (
   if (!param.dataType) param.dataType = 'JSON';
   if (!param.timeout) param.timeout = 120000;
   if (param.token) {
-    if (jsCookie.get('token')) {
-      param.header['Authorization'] = jsCookie.get('token');
+    if (jsCookie.get('uni-Token')) {
+      param.header['Authorization'] = jsCookie.get('uni-Token');
     } else {
       const currentRoute = getCurrentPages()[getCurrentPages().length - 1]?.route;
-      if (currentRoute) {
+      if (currentRoute && (currentRoute !== 'member/pages/login/index')) {
         uni.redirectTo({
           url: `/member/pages/login/index?targetUrl=/${currentRoute}`,
           success: () => {

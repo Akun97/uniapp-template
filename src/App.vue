@@ -15,6 +15,12 @@ onHide(() => {
   console.log("App Hide");
 });
 
+onPageNotFound(() => {
+  uni.redirectTo({
+    url: '/pages/404/index'
+  });
+});
+
 </script>
 
 <style lang="scss">

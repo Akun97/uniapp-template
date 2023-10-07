@@ -39,6 +39,12 @@
 			"style": {
 				"disableScroll": true
 			}
+		},
+		{
+			"path": "pages/404/index",
+			"style": {
+				"disableScroll": true
+			}
 		}
 	],
 	"subPackages": [

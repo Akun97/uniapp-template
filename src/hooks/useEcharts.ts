@@ -50,7 +50,7 @@ export const useTooltipTemplate = (data:any[], formatFunc:(value:any, index:numb
  * @param {number} interval 轮播间隔 ms
  * @returns {echatsCarousel} 
  * */ 
-export const useEchatsCarousel = (chartRef:any, interval:number, select?:boolean):echatsCarousel => {
+export const useEchatsCarousel = (chartRef:any, interval:number, select?:boolean, mouse:boolean = true):echatsCarousel => {
 
   // 轮播数据
   const data = reactive<{value: any[]}>({
@@ -58,6 +58,10 @@ export const useEchatsCarousel = (chartRef:any, interval:number, select?:boolean
   });
   // 轮播下标
   const index = ref<number>(0);
+  // 初始下标
+  const initIndex = ref<number>(0);
+  // 图表个数
+  const seriesCount = ref<number>(0);
   // 计时轮播
   const timer = ref<any>(null);
 
@@ -80,16 +84,11 @@ export const useEchatsCarousel = (chartRef:any, interval:number, select?:boolean
    * @param {number} dataIndex 数据项的 index
    * */ 
   const dispatchActionChart = (type:string, dataIndex:number):void => {
-    chartRef.value.dispatchAction({
-      type: type,
-      seriesIndex: 0,
-      dataIndex: dataIndex
-    });
-    if (select) {
-      chartRef.value.dispatchAction({
+    for (let i = 0; i < seriesCount.value; i++) {
+      chartRef.value?.dispatchAction({
         type: type,
-        seriesIndex: 1,
-        dataIndex: dataIndex,
+        seriesIndex: i,
+        dataIndex: dataIndex
       });
     }
   }
@@ -109,7 +108,7 @@ export const useEchatsCarousel = (chartRef:any, interval:number, select?:boolean
         // 索引增加
         index.value = index.value + 1;
       } else {
-        index.value = 0;
+        index.value = initIndex.value;
       }
       // 激活高亮跟提示
       dispatchActionChart(select ? "select" : "highlight", index.value);
@@ -121,39 +120,59 @@ export const useEchatsCarousel = (chartRef:any, interval:number, select?:boolean
    * @description 鼠标划入
    * */ 
   const mouseEvents = () => {
-    chartRef.value.chartEvent('mouseover', () => {
-      // 停止计时器， 清楚尚亮
-      clearTimer();
-      dispatchActionChart(select ? "unselect" : 'downplay', index.value);
-      index.value = -1;
+    chartRef.value.chartEvent('mouseover', (e:any) => {
+      if (mouse) {
+        setIndex(e.dataIndex);
+      }
     });
     chartRef.value.chartEvent('mouseout', () => {
       // 启动轮播
-      setIntervalMyChart();
+      if (mouse) {
+        setIntervalMyChart();
+      }
     });
   }
+
+  /**
+   * @description 设置下标
+   * */ 
+  const setIndex = (i:number):void => {
+    clearTimer();
+    dispatchActionChart(select ? "unselect" : 'downplay', index.value);
+    index.value = i;
+    dispatchActionChart(select ? "select" : "highlight", index.value);
+    dispatchActionChart("showTip", index.value);
+    setIntervalMyChart();
+  }  
 
   /**
    * @description 初始化轮播
    * @param {any[]} val 数组列表 用于计算列表长度
    * */ 
-  const initEchatsCarousel = (val: any[]):void => {
+  const initEchatsCarousel = (query:{val: any[], initIndexValue?: number, autoPlay?: boolean, seriesCount?: number }):void => {
+    query = Object.assign({ initIndexValue: 0, autoPlay: true, seriesCount: 1 }, query);
+    initIndex.value = query.initIndexValue as number;
+    seriesCount.value = query.seriesCount as number;
     // 清除高亮跟提示
-    val.map((item:any, index:number) => {
+    query.val.map((item:any, index:number) => {
       dispatchActionChart(select ? "unselect" : "downplay", index);
       dispatchActionChart("hideTip", index);
     });
-    setTimeout(() => {
-      index.value = 0;
+    index.value = initIndex.value;
+    data.value = query.val;
+    if (query.autoPlay) {
       dispatchActionChart(select ? "select" : "highlight", index.value);
       dispatchActionChart("showTip", index.value);
-      data.value = val;
       setIntervalMyChart();
-    }, 100);
+    } else {
+      clearTimer();
+    }
   }
 
   return {
-    initEchatsCarousel
+    index,
+    initEchatsCarousel,
+    setIndex
   }
 
 }

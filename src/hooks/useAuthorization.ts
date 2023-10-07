@@ -8,13 +8,13 @@ export const useAuthorization = () => {
   const token = ref<string>('');
 
   onShow(() => {
-    token.value = jsCookie.get('token');
+    token.value = jsCookie.get('uni-Token');
   });
 
   // 页面跳转，做权限判断
   const toPage = (url:string):void => {
     if (url) {
-      token.value = jsCookie.get('token');
+      token.value = jsCookie.get('uni-Token');
       if (token.value) {
         uni.navigateTo({
           url: url
@@ -42,25 +42,33 @@ export const useAuthorization = () => {
 
   // 表单提交成功返回
   const submitBack = (msg:string = '提交成功'):void => {
+    const toast = ():void => {
+      uni.showToast({
+        icon: 'none',
+        title: msg
+      });
+    }
     if (getCurrentPages().length > 1) {
       uni.navigateBack({
         success: () => {
-          uni.showToast({
-            icon: 'none',
-            title: msg
-          });
+          msg && toast();
         }
       });
     } else {
+      /* #ifdef MP */
       uni.switchTab({
         url: '/pages/index/index',
         success: () => {
-          uni.showToast({
-            icon: 'none',
-            title: msg
-          });
+          msg && toast();
         }
       });
+      /* #endif */
+      /* #ifdef APP-PLUS || H5 */
+      // history.back();
+      // setTimeout(() => {
+      //   msg && toast();
+      // }, 0);
+      /* #endif */
     }
   }
 
