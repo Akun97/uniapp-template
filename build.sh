@@ -1,8 +1,8 @@
 npm run build:h5
 echo ps-docker-registry.cn-beijing.cr.aliyuncs.com/psdsframework/uniapp_template:$1
 docker manifest rm ps-docker-registry.cn-beijing.cr.aliyuncs.com/psdsframework/uniapp_template:$1
-docker build -t ps-docker-registry.cn-beijing.cr.aliyuncs.com/psdsframework/uniapp_template:$1-arm64v8 -f Dockerfile --build-arg BASE_IMAGE=arm64v8/nginx:stable .
-docker build -t ps-docker-registry.cn-beijing.cr.aliyuncs.com/psdsframework/uniapp_template:$1-x86_64 -f Dockerfile --build-arg BASE_IMAGE=nginx:stable .
+docker build --platform linux/arm64 -t ps-docker-registry.cn-beijing.cr.aliyuncs.com/psdsframework/uniapp_template:$1-arm64v8 -f Dockerfile --build-arg BASE_IMAGE=arm64v8/nginx:stable .
+docker build --platform linux/amd64 -t ps-docker-registry.cn-beijing.cr.aliyuncs.com/psdsframework/uniapp_template:$1-x86_64 -f Dockerfile --build-arg BASE_IMAGE=nginx:stable .
 docker push ps-docker-registry.cn-beijing.cr.aliyuncs.com/psdsframework/uniapp_template:$1-arm64v8
 docker push ps-docker-registry.cn-beijing.cr.aliyuncs.com/psdsframework/uniapp_template:$1-x86_64
 # 创建多平台 Manifests

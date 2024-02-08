@@ -1,7 +1,5 @@
 export const useGlobal = () => {
 
-  const fileUrl = process.env.VITE_FILE_URL;
-
   const ossUrl = process.env.VITE_OSS_URL;
 
   const baseUrl = process.env.VITE_REQUEST_URL;
@@ -44,7 +42,6 @@ export const useGlobal = () => {
   }
 
   return {
-    fileUrl,
     ossUrl,
     baseUrl,
     devIng,

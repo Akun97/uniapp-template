@@ -13,12 +13,12 @@ const isApp = process.env.UNI_PLATFORM === 'app';
 const WeappTailwindcssDisabled = isH5 || isApp;
 
 const vitePlugins = [
-  uni(),
   WeappTailwindcssDisabled ? undefined : uvtw(),
   AutoImport({
     imports: [
       "vue",
-      "uni-app"
+      "uni-app",
+      "pinia",
     ],
     ignore: ['createApp'],
     dirs: [
@@ -34,7 +34,8 @@ const vitePlugins = [
     dirs: [
       'src/components'
     ]
-  })
+  }),
+  uni(),
 ];
 // postcss 插件配置
 const postcssPlugins:any[] = [tailwindcss(), autoprefixer()]
@@ -77,7 +78,7 @@ export default (({ mode }) => {
     server: {
       proxy: {
         '/api-prefix-dev': {
-          target: 'http://0.0.0.0:80',
+          target: '/',
           secure: false,
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api-prefix-dev/, '')

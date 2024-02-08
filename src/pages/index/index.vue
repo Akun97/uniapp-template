@@ -17,7 +17,7 @@
           :circular="true">
           <template v-for="(item, index) in list" :key="index">
             <swiper-item class="w-full h-full">
-              <custom-image className="w-full h-full" :src="`${fileUrl}${item}`"></custom-image>
+              <custom-image className="w-full h-full" :src="item"></custom-image>
             </swiper-item>
           </template>
         </swiper>
@@ -35,7 +35,6 @@
 <script setup lang="ts">
 import { ResultModel } from '@/model/result';
 
-const { fileUrl } = useGlobal();
 const { initTabbar } = useTabbar();
 const list = ref<string[]>(['/static/2022/06/13/8677e8e3-162e-4cc1-908e-002b39956eb0.png']);
 
